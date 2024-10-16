@@ -1,5 +1,6 @@
-import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import React, { useContext, useState } from 'react'
+import { Link,useLocation } from 'react-router-dom'
+import { AuthContext } from '../AuthContext';
 
 const listOfLinks = [
     {
@@ -12,11 +13,7 @@ const listOfLinks = [
         name: "Find Jobs",
         link: "/findJobs"
     },
-    {
-        id: 3,
-        name: "Applied Jobs",
-        link: "/appliedJobs"
-    },
+
     {
         id: 4,
         name: "About",
@@ -33,12 +30,17 @@ const Navbar = () => {
 
     const [showNavBar, setShowNavBar] = useState(false);
 
+    const {userData,setUserData}=useContext(AuthContext)
+
+    const {pathname}=useLocation();
+    
+
     const handleShowNavbar = () => {
         setShowNavBar(!showNavBar)
     }
 
     return (
-        <nav className=' flex  items-center justify-between lg:px-16 py-3 md:px-8 px-4 '>
+        <nav className=' flex sticky top-0 w-full backdrop-blur-md bg-slate-100  items-center justify-between lg:px-16 py-3 md:px-8 px-4 '>
             <div className=' flex font-bold text-2xl cursor-pointer text-purple-600'>
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-9">
                     <path stroke-linecap="round" stroke-linejoin="round" d="m15.75 15.75-2.489-2.489m0 0a3.375 3.375 0 1 0-4.773-4.773 3.375 3.375 0 0 0 4.774 4.774ZM21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
@@ -52,11 +54,19 @@ const Navbar = () => {
                     {
                         listOfLinks.map((item) => {
                             return (
-                                <li className=' font-semibold hover:text-blue-800 hover:font-bold duration-500 transition-all'>
+                                <li className={`font-semibold hover:text-blue-800 hover:font-bold duration-500 transition-all ${pathname===item.link?" text-red-600":"text-gray-600"}`}>
                                     <Link to={item.link}>{item.name}</Link>
                                 </li>
                             )
                         })
+                    }
+                    {
+                        userData==='user' ? (
+                            <Link to={"/appliedJobs"}>Applied Jobs</Link>
+                        ):
+                        (
+                            <Link to={"/createdJobs"}>Created Jobs</Link>
+                        )
                     }
                 </ul>
             </div>
@@ -68,7 +78,7 @@ const Navbar = () => {
                 <div className=' flex items-center gap-1 bg-slate-100 p-2 px-4 rounded-md cursor-pointer'>
                     <img src="https://pbs.twimg.com/media/Eo828EjU0AAoFD1.jpg:large" alt="userLogo" height={50} width={50} className=' rounded-3xl h-12 w-12 object-cover ' />
                     <div>
-                        <h1 className=' font-bold'>Reshmi</h1>
+                        <h1 className=' font-bold'>{userData}</h1>
                         <h1 className=' text-sm'>user</h1>
                     </div>
                 </div>
@@ -96,7 +106,7 @@ const Navbar = () => {
                             {
                                 listOfLinks.map((item) => {
                                     return (
-                                        <li className=' font-semibold  hover:font-bold duration-500 transition-all'>
+                                        <li className={`font-semibold hover:text-blue-800 hover:font-bold duration-500 transition-all ${pathname===item.link?" text-red-600":"text-white"}`}>
                                             <Link to={item.link}>{item.name}</Link>
                                         </li>
                                     )

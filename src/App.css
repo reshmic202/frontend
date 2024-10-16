@@ -37,3 +37,12 @@
     transform: rotate(360deg);
   }
 }
+
+.wrapper{
+  border: 1px solid grey;
+  padding: 10px;
+}
+
+.editor{
+  background-color: lavender;
+}

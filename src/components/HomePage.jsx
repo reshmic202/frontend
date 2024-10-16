@@ -2,12 +2,12 @@ import React from 'react'
 import Navbar from './Navbar'
 import HeroSection from './HeroSection'
 import FeaturedJobs from './FeaturedJobs'
+import AdvertisementPage from './AdvertisementPage'
+import FooterPage from './FooterPage'
 
 const HomePage = () => {
   return (
     <div className=' '>
-      {/* navbar */}
-      <Navbar/>
 
       {/* herosection */}
       <HeroSection/>
@@ -16,8 +16,9 @@ const HomePage = () => {
       <FeaturedJobs />
 
       {/* top hiring company */}
-
+      <AdvertisementPage/>
       {/* footer */}
+      <FooterPage/>
 
     </div>
   )
